@@ -1,0 +1,19 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date</th>
+      <th scope="col">Total</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="data">
+    <tr *ngFor="let invoice of data.data">
+      <th scope="row">{{invoice.invoice_number}}</th>
+      <td>{{parseDate(invoice.invoice_date)}}</td>
+      <td>${{invoice.total}}</td>
+      <td>{{invoice.status}}</td>
+    </tr>
+  </tbody>
+</table>
+

@@ -1,1 +1,53 @@
-<router-outlet></router-outlet>
+<div class="container mt-2">
+  <form class="row" (ngSubmit)="onSubmit()" #dateForm="ngForm">
+    <div class="d-flex justify-content-center col">
+      <div class="me-3">
+        <label class="form-label me-2" for="startDate">Fecha inicial:</label>
+        <input
+          type="date"
+          id="startDate"
+          name="startDate"
+          [(ngModel)]="startDate"
+          (ngModelChange)="onStartDateChange($event)"
+          required
+        />
+      </div>
+      <div>
+        <label class="form-label me-2" for="endDate">Fecha final:</label>
+        <input
+          type="date"
+          id="endDate"
+          name="endDate"
+          [min]="startDate"
+          [(ngModel)]="endDate"
+          required
+        />
+      </div>
+    </div>
+    <div class="col-2">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="dateForm.invalid"
+      >
+        Consultar
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="loading" class="w-100 text-center mt-2">Cargando resultados...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="results">
+    <h3>Resultados:</h3>
+    <app-tables [data]="results"></app-tables>
+    <div class="card flex justify-content-center" *ngIf="totalPages > 1">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="pageSize"
+        [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[10, 20, 30]"
+      ></p-paginator>
+    </div>
+  </div>
+</div>
